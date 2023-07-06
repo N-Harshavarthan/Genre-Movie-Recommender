@@ -1,7 +1,8 @@
-import warnings
-from ast import literal_eval
 import numpy as np
 import pandas as pd
+import warnings
+from ast import literal_eval
+import time
 from nltk.stem.snowball import SnowballStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import linear_kernel, cosine_similarity
@@ -204,8 +205,9 @@ def supreme(Title):
         movie_indices = [i[0] for i in sim_scores]
 
         movies = smd.iloc[movie_indices][['title', 'vote_count', 'vote_average', 'year']]
-        Vote_counts = movies[movies['vote_count'].notnull()]['vote_count'].astype('int')
         Vote_averages = movies[movies['vote_average'].notnull()]['vote_average'].astype('int')
+        Vote_counts = movies[movies['vote_count'].notnull()]['vote_count'].astype('int')
+        
         Vote_averages.mean()
         M = Vote_counts.quantile(0.60)
         Qualified = movies[
